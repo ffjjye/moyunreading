@@ -1,50 +1,47 @@
-# 墨韵 - 北航师生的阅读交流平台
 
-这是一个基于 Vue.js 和 Vuetify 构建的前端项目，旨在为北航师生提供一个阅读交流的平台。
+## 环境准备
 
-## 技术栈
+- Node.js >= 14.x
+- npm 或 yarn
+- JDK >= 8
+- Maven >= 3.6
+- MySQL >= 5.7
 
-- **前端框架**: Vue.js
-- **UI 组件库**: Vuetify
-- **包管理器**: npm
-- **代码规范**: ESLint
+## 安装与运行
 
-## 环境要求
-
-- Node.js (推荐 LTS 版本)
-- npm (Node.js 安装时自带)
-
-## 项目设置
+### 1. 克隆项目
 
 ```bash
+git clone https://github.com/yourusername/moyunreading-master.git
+cd moyunreading-master
+```
+
+### 2. 数据库初始化
+
+- 创建数据库（如 `moyunreading`），导入 `backend/code/init.sql` 或 `backend/code/src/main/resources/db/init.sql`。
+- 如有数据库迁移需求，可执行 `db/migration` 下的 SQL 脚本。
+
+### 3. 启动后端
+
+```bash
+cd backend/code
+mvn clean install
+# 修改 application.yml 数据库配置
+mvn spring-boot:run
+```
+
+### 4. 启动前端
+
+```bash
+cd ../../
 npm install
-```
-
-### 开发模式
-
-在开发模式下编译并热重载：
-
-```bash
 npm run serve
+# 或
+yarn install
+yarn serve
 ```
 
-### 生产模式
+前端默认运行在 [http://localhost:8080](http://localhost:8080)，后端接口默认在 [http://localhost:8081](http://localhost:8081)（端口以实际配置为准）。
 
-为生产环境编译并最小化：
 
-```bash
-npm run build
-```
-
-### 运行单元测试
-
-```bash
-npm run test:unit
-```
-
-### 代码规范检查与修复
-
-```bash
-npm run lint
-```
-
+如需详细文档或有任何疑问，欢迎联系项目维护者。
