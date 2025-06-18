@@ -1,0 +1,70 @@
+-- 用户表
+CREATE TABLE IF NOT EXISTS `user` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `username` VARCHAR(50) NOT NULL UNIQUE,
+    `password` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100),
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 书籍表
+CREATE TABLE IF NOT EXISTS `book` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `title` VARCHAR(100) NOT NULL,
+    `description` TEXT,
+    `file_path` VARCHAR(255),
+    `uploader_id` INT,
+    `upload_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`uploader_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 小组表
+CREATE TABLE IF NOT EXISTS `group` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `description` TEXT,
+    `creator_id` INT,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`creator_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 小组成员表
+CREATE TABLE IF NOT EXISTS `group_member` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `group_id` INT,
+    `user_id` INT,
+    `join_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`group_id`) REFERENCES `group`(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 书籍评论表
+CREATE TABLE IF NOT EXISTS `book_comment` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `book_id` INT,
+    `user_id` INT,
+    `content` TEXT,
+    `comment_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 书籍收藏表
+CREATE TABLE IF NOT EXISTS `book_collection` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `book_id` INT,
+    `user_id` INT,
+    `collect_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`book_id`) REFERENCES `book`(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
